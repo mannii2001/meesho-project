@@ -18,7 +18,6 @@ const AllProduct = () => {
     setFilteredData(response.data);
   };
 
- 
   function comparator(a, b) {
     return a.price - b.price;
   }
@@ -42,7 +41,7 @@ const AllProduct = () => {
     }
   }
 
-  function searchProduct(e){
+  function searchProduct(e) {
     const searchValue = e.target.value.toLowerCase();
 
     const filteredArray = data.filter((item) =>
@@ -52,18 +51,24 @@ const AllProduct = () => {
     setFilteredData(filteredArray);
   }
 
-  function handleCategoryFilter(e) {
+  const handleCategoryFilter = (e) => {
     const category = e.target.name;
-
+    let newData;
     if (e.target.checked) {
-      setSelectedCategories([...selectedCategories, category]);
+      newData = [...selectedCategories, category];
+      setSelectedCategories(newData);
     } else {
-      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+      newData = selectedCategories.filter((cat) => cat !== category);
+      setSelectedCategories(newData);
     }
-  
-    setFilteredData(data.filter(item => selectedCategories.includes(item.category)));
-  
-  }
+
+    if (newData.length === 0) {
+      setFilteredData(data);
+    } else {
+      let x = data.filter((item) => newData.includes(item.category));
+      setFilteredData(x);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -127,7 +132,12 @@ const AllProduct = () => {
                   fontSize: "20px",
                 }}
               >
-                <input type="checkbox" id="men's clothing" name="men's clothing"  onChange={handleCategoryFilter}/>
+                <input
+                  type="checkbox"
+                  id="men's clothing"
+                  name="men's clothing"
+                  onChange={handleCategoryFilter}
+                />
                 <label for="men's clothing" style={{ paddingLeft: "0.5rem" }}>
                   <strong>Men</strong>
                 </label>
@@ -139,7 +149,12 @@ const AllProduct = () => {
                   fontSize: "20px",
                 }}
               >
-                <input type="checkbox" id="women's clothing" name="women's clothing"  onChange={handleCategoryFilter}/>
+                <input
+                  type="checkbox"
+                  id="women's clothing"
+                  name="women's clothing"
+                  onChange={handleCategoryFilter}
+                />
                 <label for="women's clothing" style={{ paddingLeft: "0.5rem" }}>
                   <strong>Women</strong>
                 </label>
@@ -151,7 +166,12 @@ const AllProduct = () => {
                   fontSize: "20px",
                 }}
               >
-                <input type="checkbox" id="electronics" name="electronics"  onChange={handleCategoryFilter}/>
+                <input
+                  type="checkbox"
+                  id="electronics"
+                  name="electronics"
+                  onChange={handleCategoryFilter}
+                />
                 <label for="electronics" style={{ paddingLeft: "0.5rem" }}>
                   <strong>Electronics</strong>
                 </label>
@@ -163,7 +183,12 @@ const AllProduct = () => {
                   fontSize: "20px",
                 }}
               >
-                <input type="checkbox" id="jewelery" name="jewelery"  onChange={handleCategoryFilter}/>
+                <input
+                  type="checkbox"
+                  id="jewelery"
+                  name="jewelery"
+                  onChange={handleCategoryFilter}
+                />
                 <label for="jewelery" style={{ paddingLeft: "0.5rem" }}>
                   <strong>Jewellery</strong>
                 </label>
